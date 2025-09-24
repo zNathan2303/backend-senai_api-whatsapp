@@ -95,7 +95,7 @@ const getDadosDeContatosById = (id) => {
 }
 
 // Lista todas as mensagens de uma conta de usuário
-const getMensagens = (id) => {
+const getAllMensagensById = (id) => {
     let message = {
         status: true,
         status_code: 200,
@@ -105,7 +105,24 @@ const getMensagens = (id) => {
 
     dados.contatos['whats-users'].forEach(usuario => {
         if (usuario.id == id) {
-            usuario.contacts.forEach(contato => message.contatos.push(contato))
+            usuario.contacts.forEach(contato => {
+                let contatoInfo = {
+                    nome: contato.name,
+                    numero: contato.number,
+                    descricao: contato.description,
+                    imagem: contato.image,
+                    mensagens: []
+                }
+                contato.messages.forEach(mensagem => {
+                    const mensagemInfo = {
+                        remetente: mensagem.sender,
+                        conteudo: mensagem.content,
+                        horario: mensagem.time
+                    }
+                    contatoInfo.mensagens.push(mensagemInfo)
+                })
+                message.contatos.push(contatoInfo)
+            })
         }
     })
 
@@ -119,5 +136,5 @@ module.exports = {
     getAllDados,
     getDadosDoPerfilById,
     getDadosDeContatosById,
-    getMensagens
+    getAllMensagensById
 }

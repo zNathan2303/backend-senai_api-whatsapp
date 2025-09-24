@@ -46,7 +46,7 @@ app.get('/v1/whatsapp/contatos/:id', (request, response) => {
 })
 
 app.get('/v1/whatsapp/mensagens/:id', (request, response) => {
-    let mensagens = funcoes.getMensagens(request.params.id)
+    let mensagens = funcoes.getAllMensagensById(request.params.id)
     response.status(mensagens.status_code).json(mensagens)
 })
 
