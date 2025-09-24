@@ -45,6 +45,11 @@ app.get('/v1/whatsapp/contatos/:id', (request, response) => {
     response.status(contatos.status_code).json(contatos)
 })
 
+app.get('/v1/whatsapp/mensagens/:id', (request, response) => {
+    let mensagens = funcoes.getMensagens(request.params.id)
+    response.status(mensagens.status_code).json(mensagens)
+})
+
 app.listen(PORT, () => {
     console.log(`API aguardando requisições ...`)
 })

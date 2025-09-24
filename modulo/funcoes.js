@@ -74,13 +74,6 @@ const getDadosDeContatosById = (id) => {
         contatos: []
     }
 
-    const json = {
-        "name": "Ana Maria",
-        "number": "26999999963",
-        "description": "Frontend Developer",
-        "image": "26999999963.png"
-    }
-
     dados.contatos['whats-users'].forEach(usuario => {
         if (usuario.id == id) {
             usuario.contacts.forEach(contato => {
@@ -101,8 +94,30 @@ const getDadosDeContatosById = (id) => {
         return MESSAGE_ERRO // 500
 }
 
+// Lista todas as mensagens de uma conta de usuário
+const getMensagens = (id) => {
+    let message = {
+        status: true,
+        status_code: 200,
+        development: 'Nathan da Silva Costa',
+        contatos: []
+    }
+
+    dados.contatos['whats-users'].forEach(usuario => {
+        if (usuario.id == id) {
+            usuario.contacts.forEach(contato => message.contatos.push(contato))
+        }
+    })
+
+    if (message.contatos)
+        return message // 200
+    else
+        return MESSAGE_ERRO // 500
+}
+
 module.exports = {
     getAllDados,
     getDadosDoPerfilById,
-    getDadosDeContatosById
+    getDadosDeContatosById,
+    getMensagens
 }
