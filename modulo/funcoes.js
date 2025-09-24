@@ -132,9 +132,50 @@ const getAllMensagensById = (id) => {
         return MESSAGE_ERRO // 500
 }
 
+// Lista uma conversa de um usuario e um contato
+const getConversa = (id, numero) => {
+    let message = {
+        status: true,
+        status_code: 200,
+        development: 'Nathan da Silva Costa',
+        nome: '',
+        numero: '',
+        descricao: '',
+        imagem: '',
+        mensagens: []
+    }
+
+    dados.contatos['whats-users'].forEach(usuario => {
+        if (usuario.id == id) {
+            usuario.contacts.forEach(contato => {
+                if (contato.number == numero) {
+                    message.nome = contato.name
+                    message.numero = contato.number
+                    message.descricao = contato.description
+                    message.imagem = contato.image
+                    contato.messages.forEach(mensagem => {
+                        const mensagemInfo = {
+                            remetente: mensagem.sender,
+                            conteudo: mensagem.content,
+                            horario: mensagem.time
+                        }
+                        message.mensagens.push(mensagemInfo)
+                    })
+                }
+            })
+        }
+    })
+
+    if (message.mensagens.length)
+        return message // 200
+    else
+        return MESSAGE_ERRO // 500
+}
+
 module.exports = {
     getAllDados,
     getDadosDoPerfilById,
     getDadosDeContatosById,
-    getAllMensagensById
+    getAllMensagensById,
+    getConversa
 }
