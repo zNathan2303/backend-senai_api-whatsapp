@@ -36,8 +36,13 @@ app.get('/v1/whatsapp', (request, response) => {
 })
 
 app.get('/v1/whatsapp/perfil/:id', (request, response) => {
-    let usuario = funcoes.getDadosDoPerfil(request.params.id)
+    let usuario = funcoes.getDadosDoPerfilById(request.params.id)
     response.status(usuario.status_code).json(usuario)
+})
+
+app.get('/v1/whatsapp/contatos/:id', (request, response) => {
+    let contatos = funcoes.getDadosDeContatosById(request.params.id)
+    response.status(contatos.status_code).json(contatos)
 })
 
 app.listen(PORT, () => {

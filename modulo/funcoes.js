@@ -30,7 +30,7 @@ const getAllDados = () => {
 }
 
 // Obtém os dados referente ao perfil do id passado como parametro
-const getDadosDoPerfil = (id) => {
+const getDadosDoPerfilById = (id) => {
     let message = {
         status: true,
         status_code: 200,
@@ -65,7 +65,44 @@ const getDadosDoPerfil = (id) => {
         return MESSAGE_ERRO // 500
 }
 
+// Lista dados de todos os contatos de um usuario
+const getDadosDeContatosById = (id) => {
+    let message = {
+        status: true,
+        status_code: 200,
+        development: 'Nathan da Silva Costa',
+        contatos: []
+    }
+
+    const json = {
+        "name": "Ana Maria",
+        "number": "26999999963",
+        "description": "Frontend Developer",
+        "image": "26999999963.png"
+    }
+
+    dados.contatos['whats-users'].forEach(usuario => {
+        if (usuario.id == id) {
+            usuario.contacts.forEach(contato => {
+                const contatoInfo = {
+                    nome: contato.name,
+                    numero: contato.number,
+                    descricao: contato.description,
+                    imagem: contato.image
+                }
+                message.contatos.push(contatoInfo)
+            })
+        }
+    })
+
+    if (message.contatos)
+        return message // 200
+    else
+        return MESSAGE_ERRO // 500
+}
+
 module.exports = {
     getAllDados,
-    getDadosDoPerfil
+    getDadosDoPerfilById,
+    getDadosDeContatosById
 }
