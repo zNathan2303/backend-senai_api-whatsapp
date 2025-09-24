@@ -35,6 +35,11 @@ app.get('/v1/whatsapp', (request, response) => {
     response.status(usuarios.status_code).json(usuarios)
 })
 
+app.get('/v1/whatsapp/perfil/:id', (request, response) => {
+    let usuario = funcoes.getDadosDoPerfil(request.params.id)
+    response.status(usuario.status_code).json(usuario)
+})
+
 app.listen(PORT, () => {
     console.log(`API aguardando requisições ...`)
 })

@@ -13,6 +13,7 @@ const MESSAGE_ERRO = {
 
 const dados = require('./contatos.js')
 
+// Obtém todos os dados
 const getAllDados = () => {
     let message = {
         status: true,
@@ -21,12 +22,50 @@ const getAllDados = () => {
     }
 
     message.usuarios = dados.contatos['whats-users']
+
     if (message.usuarios)
         return message // 200
     else
         return MESSAGE_ERRO // 500
 }
 
+// Obtém os dados referente ao perfil do id passado como parametro
+const getDadosDoPerfil = (id) => {
+    let message = {
+        status: true,
+        status_code: 200,
+        development: 'Nathan da Silva Costa',
+        nome: '',
+        nick: '',
+        foto: '',
+        numero: '',
+        corDeFundo: '',
+        criacaoDaConta: {
+            inicio: '',
+            fim: ''
+        }
+    }
+
+    dados.contatos['whats-users'].forEach(usuario => {
+        if (usuario.id == id) {
+            message.nome = usuario.account
+            message.nick = usuario.nickname
+            message.foto = usuario['profile-image']
+            message.numero = usuario.number
+            message.corDeFundo = usuario.background
+            message.criacaoDaConta.inicio = usuario['created-since'].start
+            message.criacaoDaConta.fim = usuario['created-since'].end
+        }
+    })
+
+    if (message.nome || message.nick || message.foto || message.numero ||
+        message.corDeFundo || message.criacaoDaConta.inicio || message.criacaoDaConta.fim)
+        return message // 200
+    else
+        return MESSAGE_ERRO // 500
+}
+
 module.exports = {
-    getAllDados
+    getAllDados,
+    getDadosDoPerfil
 }
