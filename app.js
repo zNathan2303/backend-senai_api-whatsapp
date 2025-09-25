@@ -51,7 +51,12 @@ app.get('/v1/whatsapp/mensagens/:id', (request, response) => {
 })
 
 app.get('/v1/whatsapp/mensagens/conversa/:id', (request, response) => {
-    let conversa = funcoes.getConversa(request.params.id, request.query.numero)
+    let conversa
+    if (request.query.pesquisar)
+        conversa = funcoes.getMensagensByPalavraChave(request.params.id, request.query.numero, request.query.pesquisar)
+    else
+        conversa = funcoes.getConversa(request.params.id, request.query.numero)
+
     response.status(conversa.status_code).json(conversa)
 })
 

@@ -88,7 +88,7 @@ const getDadosDeContatosById = (id) => {
         }
     })
 
-    if (message.contatos)
+    if (message.contatos.length)
         return message // 200
     else
         return MESSAGE_ERRO // 500
@@ -126,7 +126,7 @@ const getAllMensagensById = (id) => {
         }
     })
 
-    if (message.contatos)
+    if (message.contatos.length)
         return message // 200
     else
         return MESSAGE_ERRO // 500
@@ -153,13 +153,59 @@ const getConversa = (id, numero) => {
                     message.numero = contato.number
                     message.descricao = contato.description
                     message.imagem = contato.image
+
                     contato.messages.forEach(mensagem => {
                         const mensagemInfo = {
                             remetente: mensagem.sender,
                             conteudo: mensagem.content,
                             horario: mensagem.time
                         }
+
                         message.mensagens.push(mensagemInfo)
+                    })
+                }
+            })
+        }
+    })
+
+    if (message.mensagens.length)
+        return message // 200
+    else
+        return MESSAGE_ERRO // 500
+}
+
+// Obtem uma lista de mensagens de uma conversa com base na palavra chave que o usuario buscou
+const getMensagensByPalavraChave = (id, numero, palavraChave) => {
+    let message = {
+        status: true,
+        status_code: 200,
+        development: 'Nathan da Silva Costa',
+        nome: '',
+        numero: '',
+        descricao: '',
+        imagem: '',
+        mensagens: []
+    }
+
+    dados.contatos['whats-users'].forEach(usuario => {
+        if (usuario.id == id) {
+            usuario.contacts.forEach(contato => {
+                if (contato.number == numero) {
+                    message.nome = contato.name
+                    message.numero = contato.number
+                    message.descricao = contato.description
+                    message.imagem = contato.image
+
+                    contato.messages.forEach(mensagem => {
+                        if (mensagem.content.toLowerCase().includes(palavraChave.toLowerCase())) {
+                            const mensagemInfo = {
+                                remetente: mensagem.sender,
+                                conteudo: mensagem.content,
+                                horario: mensagem.time
+                            }
+
+                            message.mensagens.push(mensagemInfo)
+                        }
                     })
                 }
             })
@@ -177,5 +223,6 @@ module.exports = {
     getDadosDoPerfilById,
     getDadosDeContatosById,
     getAllMensagensById,
-    getConversa
+    getConversa,
+    getMensagensByPalavraChave
 }
