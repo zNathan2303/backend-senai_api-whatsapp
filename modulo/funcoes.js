@@ -140,21 +140,31 @@ const getConversa = (numeroUsuario, numeroContato) => {
         status: true,
         status_code: 200,
         development: 'Nathan da Silva Costa',
-        nome: '',
-        numero: '',
-        descricao: '',
-        imagem: '',
         mensagens: []
     }
 
     dados.contatos['whats-users'].forEach(usuario => {
         if (usuario.number == numeroUsuario) {
+            message.usuarioInfo = {
+                id: usuario.id,
+                nome: usuario.account,
+                nickname: usuario.nickname,
+                criacao: {
+                    inicio: usuario['created-since'].start,
+                    fim: usuario['created-since'].end
+                },
+                foto: usuario['profile-image'],
+                numero: usuario.number,
+                corDeFundo: usuario.background
+            }
             usuario.contacts.forEach(contato => {
                 if (contato.number == numeroContato) {
-                    message.nome = contato.name
-                    message.numero = contato.number
-                    message.descricao = contato.description
-                    message.imagem = contato.image
+                    message.contatoInfo = {
+                        nome: contato.name,
+                        numero: contato.number,
+                        descricao: contato.description,
+                        imagem: contato.image
+                    }
 
                     contato.messages.forEach(mensagem => {
                         const mensagemInfo = {
@@ -182,21 +192,31 @@ const getMensagensByPalavraChave = (numeroUsuario, numeroContato, palavraChave) 
         status: true,
         status_code: 200,
         development: 'Nathan da Silva Costa',
-        nome: '',
-        numero: '',
-        descricao: '',
-        imagem: '',
         mensagens: []
     }
 
     dados.contatos['whats-users'].forEach(usuario => {
         if (usuario.number == numeroUsuario) {
+            message.usuarioInfo = {
+                id: usuario.id,
+                nome: usuario.account,
+                nickname: usuario.nickname,
+                criacao: {
+                    inicio: usuario['created-since'].start,
+                    fim: usuario['created-since'].end
+                },
+                foto: usuario['profile-image'],
+                numero: usuario.number,
+                corDeFundo: usuario.background
+            }
             usuario.contacts.forEach(contato => {
                 if (contato.number == numeroContato) {
-                    message.nome = contato.name
-                    message.numero = contato.number
-                    message.descricao = contato.description
-                    message.imagem = contato.image
+                    message.contatoInfo = {
+                        nome: contato.name,
+                        numero: contato.number,
+                        descricao: contato.description,
+                        imagem: contato.image
+                    }
 
                     contato.messages.forEach(mensagem => {
                         if (mensagem.content.toLowerCase().includes(palavraChave.toLowerCase())) {
