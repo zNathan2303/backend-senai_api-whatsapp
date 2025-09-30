@@ -30,11 +30,12 @@ const getAllDados = () => {
 }
 
 // Obtém os dados referente ao perfil do id passado como parametro
-const getDadosDoPerfilById = (id) => {
+const getDadosDoPerfilByNumber = (numero) => {
     let message = {
         status: true,
         status_code: 200,
         development: 'Nathan da Silva Costa',
+        id: 0,
         nome: '',
         nick: '',
         foto: '',
@@ -47,7 +48,8 @@ const getDadosDoPerfilById = (id) => {
     }
 
     dados.contatos['whats-users'].forEach(usuario => {
-        if (usuario.id == id) {
+        if (usuario.number == numero) {
+            message.id = usuario.id
             message.nome = usuario.account
             message.nick = usuario.nickname
             message.foto = usuario['profile-image']
@@ -58,15 +60,14 @@ const getDadosDoPerfilById = (id) => {
         }
     })
 
-    if (message.nome || message.nick || message.foto || message.numero ||
-        message.corDeFundo || message.criacaoDaConta.inicio || message.criacaoDaConta.fim)
+    if (message.numero)
         return message // 200
     else
         return MESSAGE_ERRO // 500
 }
 
 // Lista dados de todos os contatos de um usuario
-const getDadosDeContatosById = (id) => {
+const getDadosDeContatosByNumber = (numero) => {
     let message = {
         status: true,
         status_code: 200,
@@ -75,9 +76,10 @@ const getDadosDeContatosById = (id) => {
     }
 
     dados.contatos['whats-users'].forEach(usuario => {
-        if (usuario.id == id) {
+        if (usuario.number == numero) {
             usuario.contacts.forEach(contato => {
                 const contatoInfo = {
+                    id: contato.id,
                     nome: contato.name,
                     numero: contato.number,
                     descricao: contato.description,
@@ -95,7 +97,7 @@ const getDadosDeContatosById = (id) => {
 }
 
 // Lista todas as mensagens de uma conta de usuário
-const getAllMensagensById = (id) => {
+const getAllMensagensByNumber = (numero) => {
     let message = {
         status: true,
         status_code: 200,
@@ -104,7 +106,7 @@ const getAllMensagensById = (id) => {
     }
 
     dados.contatos['whats-users'].forEach(usuario => {
-        if (usuario.id == id) {
+        if (usuario.number == numero) {
             usuario.contacts.forEach(contato => {
                 let contatoInfo = {
                     nome: contato.name,
@@ -133,7 +135,7 @@ const getAllMensagensById = (id) => {
 }
 
 // Lista uma conversa de um usuario e um contato
-const getConversa = (id, numero) => {
+const getConversa = (numeroUsuario, numeroContato) => {
     let message = {
         status: true,
         status_code: 200,
@@ -146,9 +148,9 @@ const getConversa = (id, numero) => {
     }
 
     dados.contatos['whats-users'].forEach(usuario => {
-        if (usuario.id == id) {
+        if (usuario.number == numeroUsuario) {
             usuario.contacts.forEach(contato => {
-                if (contato.number == numero) {
+                if (contato.number == numeroContato) {
                     message.nome = contato.name
                     message.numero = contato.number
                     message.descricao = contato.description
@@ -175,7 +177,7 @@ const getConversa = (id, numero) => {
 }
 
 // Obtem uma lista de mensagens de uma conversa com base na palavra chave que o usuario buscou
-const getMensagensByPalavraChave = (id, numero, palavraChave) => {
+const getMensagensByPalavraChave = (numeroUsuario, numeroContato, palavraChave) => {
     let message = {
         status: true,
         status_code: 200,
@@ -188,9 +190,9 @@ const getMensagensByPalavraChave = (id, numero, palavraChave) => {
     }
 
     dados.contatos['whats-users'].forEach(usuario => {
-        if (usuario.id == id) {
+        if (usuario.number == numeroUsuario) {
             usuario.contacts.forEach(contato => {
-                if (contato.number == numero) {
+                if (contato.number == numeroContato) {
                     message.nome = contato.name
                     message.numero = contato.number
                     message.descricao = contato.description
@@ -220,9 +222,9 @@ const getMensagensByPalavraChave = (id, numero, palavraChave) => {
 
 module.exports = {
     getAllDados,
-    getDadosDoPerfilById,
-    getDadosDeContatosById,
-    getAllMensagensById,
+    getDadosDoPerfilByNumber,
+    getDadosDeContatosByNumber,
+    getAllMensagensByNumber,
     getConversa,
     getMensagensByPalavraChave
 }

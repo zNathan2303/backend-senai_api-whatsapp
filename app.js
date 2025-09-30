@@ -35,27 +35,27 @@ app.get('/v1/whatsapp', (request, response) => {
     response.status(usuarios.status_code).json(usuarios)
 })
 
-app.get('/v1/whatsapp/perfil/:id', (request, response) => {
-    let usuario = funcoes.getDadosDoPerfilById(request.params.id)
+app.get('/v1/whatsapp/perfil/:numero', (request, response) => {
+    let usuario = funcoes.getDadosDoPerfilByNumber(request.params.numero)
     response.status(usuario.status_code).json(usuario)
 })
 
-app.get('/v1/whatsapp/contatos/:id', (request, response) => {
-    let contatos = funcoes.getDadosDeContatosById(request.params.id)
+app.get('/v1/whatsapp/contatos/:numero', (request, response) => {
+    let contatos = funcoes.getDadosDeContatosByNumber(request.params.numero)
     response.status(contatos.status_code).json(contatos)
 })
 
-app.get('/v1/whatsapp/mensagens/:id', (request, response) => {
-    let mensagens = funcoes.getAllMensagensById(request.params.id)
+app.get('/v1/whatsapp/mensagens/:numero', (request, response) => {
+    let mensagens = funcoes.getAllMensagensByNumber(request.params.numero)
     response.status(mensagens.status_code).json(mensagens)
 })
 
-app.get('/v1/whatsapp/mensagens/conversa/:id', (request, response) => {
+app.get('/v1/whatsapp/mensagens/conversa/:numero', (request, response) => {
     let conversa
     if (request.query.pesquisar)
-        conversa = funcoes.getMensagensByPalavraChave(request.params.id, request.query.numero, request.query.pesquisar)
+        conversa = funcoes.getMensagensByPalavraChave(request.params.numero, request.query.numero, request.query.pesquisar)
     else
-        conversa = funcoes.getConversa(request.params.id, request.query.numero)
+        conversa = funcoes.getConversa(request.params.numero, request.query.numero)
 
     response.status(conversa.status_code).json(conversa)
 })
