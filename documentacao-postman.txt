@@ -1,0 +1,3 @@
+Abaixo está o link que vai para a documentação dos endpoints:
+
+https://documenter.getpostman.com/view/46624410/2sB3QFQXRz#f03062f3-0603-4fc1-81e5-e25c4891acc4
